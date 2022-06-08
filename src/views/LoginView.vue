@@ -12,10 +12,10 @@
     <br>
     <div>
       <el-form :model="ruleForm"   ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="账号" prop="id">
-          <el-input type="id" v-model="ruleForm.id" autocomplete="off"></el-input>
+        <el-form-item label="账号" prop="accountId">
+          <el-input type="id" v-model="ruleForm.accountId" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="Password">
+        <el-form-item label="密码" prop="password">
           <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item>
@@ -56,6 +56,7 @@
 <script>
 import request from "@/utils/request";
 import router from "@/router";
+import axios from "axios";
 
 export default {
   name: "LoginView",
@@ -70,25 +71,39 @@ export default {
       },
       ruleForm: {
         password: '',
-        id: ''
+        accountId: ''
       }
     };
   },
   methods: {
     submitregisterForm(registerForm){
-      request.post("http://localhost:8081/account",this.registerform).then(res =>{
+      request.post("http://localhost:8081/account/saveUser",this.registerform).then(res =>{
         console.log(res)
       })
     },
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert("submit!");
-        } else {
-          console.log('error submit!!');
-          return false;
+      // console.log(this.ruleForm.name)
+      const th=this;
+      this.$axios({
+        method: 'post',
+        url: 'http://localhost:8081/account/userLogin',
+        data: {
+          "accountId": this.ruleForm.accountId,
+          "password": this.ruleForm.password
         }
-      });
+      })
+          .then(function(response){
+            if(response.data===200){
+              th.$refs[formName].resetFields();
+              alert("登陆成功!")
+            }else{
+              th.$refs[formName].resetFields();
+              alert("账号或密码错误！")
+            }
+          })
+          .then(function(error){
+            console.log(error)
+          })
     },
     register(formName) {
       this.dialogVisible=true;
