@@ -117,7 +117,7 @@ export default {
       }
     })
         .then(function(response){
-           alert("cg");
+           alert("正在查询...");
            console.log(response.data)
           th.tableData=response.data.data;
         })

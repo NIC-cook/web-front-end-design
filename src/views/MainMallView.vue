@@ -2,7 +2,6 @@
   <div >
     <mallHeader/>
     <div>
-      <template>
         <!---->
         <!--轮播图-->
         <el-carousel :interval="4000" type="card" height="200px">
@@ -27,7 +26,6 @@
           </el-col>
         </el-row>
         <!---->
-      </template>
     </div>
   </div>
 </template>

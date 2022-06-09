@@ -14,13 +14,23 @@
       <el-menu-item index="2-2">会场2</el-menu-item>
       <el-menu-item index="2-3">会场3</el-menu-item>
     </el-submenu>
-    <el-menu-item index="3" >购物车</el-menu-item>
-    <el-menu-item index="4" @click="switch2()">订单管理</el-menu-item>
+    <el-menu-item index="3" @click="switch2()">我的购物车</el-menu-item>
+    <el-menu-item index="4" @click="switch3()">订单管理</el-menu-item>
     <el-submenu index="5">
-      <template slot="title">用户ID：{{$store.state.accountId}}</template>
+      <template slot="title">登陆ID：{{$store.state.accountId}}</template>
       <el-menu-item index="2-1">账号信息</el-menu-item>
       <el-menu-item index="2-2" @click="outLogin()">登出</el-menu-item>
     </el-submenu>
+    <el-menu-item index="5">
+      <span>商品搜索：</span>
+      <el-input
+          placeholder="请输入商品名/ 商品id/ 商店名"
+          v-model="input"
+          clearable>
+      </el-input>
+      &nbsp;
+      <el-button type="primary" @click="insearch('search') " icon="el-icon-search">搜索</el-button>
+    </el-menu-item>
   </el-menu>
 
 </template>
@@ -46,11 +56,11 @@ export default {
     },
     switch2(){
       const th=this;
-      th.$router.push("/home/admin");
+      th.$router.push("/ShoppingCart");
     },
     switch3(){
       const th=this;
-      th.$router.push("/main");
+      th.$router.push("/home/admin");
     },
     switch4(){
       const th=this;

@@ -4,6 +4,7 @@ import layout from '../layout/layout.vue'
 import LoginView from "@/views/LoginView";
 import HomeView from "@/views/HomeView";
 import MainMallView from "@/views/MainMallView";
+import ShoppingCart from "@/views/ShoppingCart";
 
 Vue.use(VueRouter)
 
@@ -29,13 +30,11 @@ const routes = [
     path: '/main',
     name: 'main',
     component: MainMallView,
-    children:[
-      {
-        path: '/MainMall',
-        name: 'MainMall',
-        component: MainMallView
-      }
-    ]
+  },
+  {
+    path: '/ShoppingCart',
+    name: 'ShoppingCart',
+    component: ShoppingCart,
   },
 ]
 
