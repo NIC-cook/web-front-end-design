@@ -1,5 +1,5 @@
 <template>
-<div >
+<div>
   <div style="text-align: center;
 	width: 300px;
 	height: 350px;
@@ -8,6 +8,7 @@
 	top: 50%;
   transform: translate(-50%,-50%);"
   >
+
     <H1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FTB商城登陆</H1>
     <br>
     <div>
@@ -46,7 +47,7 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="submitregisterForm">注 册</el-button>
+    <el-button type="primary" @click="submitregisterForm('registerform')">注 册</el-button>
   </span>
   </el-dialog>
 </div>
@@ -70,8 +71,8 @@ export default {
         email:''
       },
       ruleForm: {
-        password: '',
-        accountId: ''
+        password:'',
+        accountId:''
       }
     };
   },
@@ -84,21 +85,43 @@ export default {
     submitForm(formName) {
       // console.log(this.ruleForm.name)
       const th=this;
+      th.$store.account_id=this.ruleForm.accountId;//把id存入全局参数
       this.$axios({
         method: 'post',
         url: 'http://localhost:8081/account/userLogin',
         data: {
-          "accountId": this.ruleForm.accountId,
-          "password": this.ruleForm.password
+          "account_id":this.ruleForm.accountId,
+          "password":this.ruleForm.password
         }
       })
           .then(function(response){
-            if(response.data===200){
+            //console.log(response.data.code);
+            //console.log(response.status);
+            //console.log(response.request);
+            //console.log(typeof (response.data.code))
+            if(response.data.code==200){
               th.$refs[formName].resetFields();
-              alert("登陆成功!")
-            }else{
+                if (response.data.data()==1)
+                {
+                  th.$router.push("/home/admin");
+                }
+                else if (response.data.data()==2)
+                {
+                  th.$router.push("/");
+                }
+                else if (response.data.data()==3)
+                {
+                  th.$router.push("/main");
+                }
+              alert("登陆成功!");
+            }else if (response.data.code==401){
               th.$refs[formName].resetFields();
-              alert("账号或密码错误！")
+              th.$store.account_id=null;//清空全局变量中的id
+              alert("账号错误！")
+            }
+            else if (response.data.code==402){
+              th.$refs[formName].resetFields();
+              alert("密码错误！");
             }
           })
           .then(function(error){

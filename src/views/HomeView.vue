@@ -10,7 +10,7 @@
         <!--搜索部分 -->
         <div style="margin: 10px 0">
           <el-input v-model="search" aria-placeholder="请输入搜索关键词" style="width: 20%"></el-input>
-          <el-button type="primary" style="margin: 10px">查询</el-button>
+          <el-button type="primary" @click="insearch('search') ">查询</el-button>
         </div>
 
         <!--表格部分 -->
@@ -20,6 +20,7 @@
         border
         style="width: 100%">
       <el-table-column
+          sortable
           prop="accountId"
           label="用户ID"
           width="180">
@@ -83,10 +84,19 @@
 import Vue from 'vue';
 import Element from 'element-ui';
 import HelloWorld from '@/components/HelloWorld.vue'
+
 export default {
   name: 'HomeView',
   components: {
 
+  },
+  data() {
+    return {
+      total:5,
+      currentPage:1,
+      tableData: [],
+      search:"all"
+    }
   },
   methods: {
     handleSizeChange(val) {
@@ -94,15 +104,28 @@ export default {
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
-    }
-  },
-  data() {
-    return {
-      total:5,
-      currentPage:1,
-      tableData: []
-    }
+    },
+
+    insearch(search){
+    // console.log(this.ruleForm.name)
+    const th=this;
+    this.$axios({
+      method: 'get',
+      url: 'http://localhost:8082/api/account/getAccount',
+      params: {
+        "search":this.search
+      }
+    })
+        .then(function(response){
+           alert("cg");
+           console.log(response.data)
+          th.tableData=response.data.data;
+        })
+        .then(function(error){
+          console.log(error)
+        })
   }
+},
 
 }
 

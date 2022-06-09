@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import layout from '../layout/layout.vue'
 import LoginView from "@/views/LoginView";
 import HomeView from "@/views/HomeView";
+import MainMallView from "@/views/MainMallView";
 
 Vue.use(VueRouter)
 
@@ -23,7 +24,19 @@ const routes = [
         component: HomeView
       }
     ]
-  }
+  },
+  {
+    path: '/main',
+    name: 'main',
+    component: MainMallView,
+    children:[
+      {
+        path: 'MainMall',
+        name: 'MainMall',
+        component: MainMallView
+      }
+    ]
+  },
 ]
 
 

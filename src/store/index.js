@@ -13,5 +13,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-  }
+  },
+  account_id:0
 })
