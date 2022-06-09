@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header/>
+    <mallHeader/>
     <div style="display:flex;">
         <Aside/>
         <router-view style="flex:1"/>
@@ -12,10 +12,11 @@
 
 import Header from "@/components/Header";
 import Aside from "@/components/Aside";
+import mallHeader from "@/components/mallHeader";
 export default {
   name: "layout",
   components: {
-    Header,
+    mallHeader,
     Aside
   },
 }

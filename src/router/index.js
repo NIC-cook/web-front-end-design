@@ -31,7 +31,7 @@ const routes = [
     component: MainMallView,
     children:[
       {
-        path: 'MainMall',
+        path: '/MainMall',
         name: 'MainMall',
         component: MainMallView
       }

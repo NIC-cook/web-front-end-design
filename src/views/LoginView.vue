@@ -85,36 +85,44 @@ export default {
     submitForm(formName) {
       // console.log(this.ruleForm.name)
       const th=this;
-      th.$store.account_id=this.ruleForm.accountId;//把id存入全局参数
+      //th.$store.account_id=this.ruleForm.accountId;//把id存入全局参数
       this.$axios({
         method: 'post',
         url: 'http://localhost:8081/account/userLogin',
         data: {
-          "account_id":this.ruleForm.accountId,
+          "accountId":this.ruleForm.accountId,
           "password":this.ruleForm.password
         }
       })
           .then(function(response){
-            //console.log(response.data.code);
+            console.log(response.data);
             //console.log(response.status);
             //console.log(response.request);
             //console.log(typeof (response.data.code))
             if(response.data.code==200){
-              th.$refs[formName].resetFields();
-                if (response.data.data()==1)
+              //th.$router.push("/home/admin");
+                if (response.data.data=="1")
                 {
                   th.$router.push("/home/admin");
+                  th.$store.commit("updateId",th.ruleForm.accountId)
                 }
-                else if (response.data.data()==2)
+                else if (response.data.data=="2")
                 {
                   th.$router.push("/");
+                  th.$store.commit("updateId",th.ruleForm.accountId)
                 }
-                else if (response.data.data()==3)
+                else if (response.data.data=="3")
                 {
+                  console.log(th);
+                  th.$store.commit("updateId",th.ruleForm.accountId)
+                  // th.$store.account_id=formName.account_id;
                   th.$router.push("/main");
                 }
+              th.$refs[formName].resetFields();
               alert("登陆成功!");
-            }else if (response.data.code==401){
+            }
+            else if (response.data.code==401)
+            {
               th.$refs[formName].resetFields();
               th.$store.account_id=null;//清空全局变量中的id
               alert("账号错误！")
