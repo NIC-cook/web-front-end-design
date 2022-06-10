@@ -5,6 +5,9 @@ import LoginView from "@/views/LoginView";
 import HomeView from "@/views/HomeView";
 import MainMallView from "@/views/MainMallView";
 import ShoppingCart from "@/views/ShoppingCart";
+import userHomeView from "@/views/userHomeView";
+import SellerRegister from "@/views/SellerRegister";
+import SellerRegister_admin from "@/views/SellerRegister_admin";
 
 Vue.use(VueRouter)
 
@@ -23,6 +26,42 @@ const routes = [
         path: 'admin',
         name: 'admin',
         component: HomeView
+      },
+    ]
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: layout,
+    children:[
+      {
+        path: 'user',
+        name: 'user',
+        component: userHomeView
+      }
+    ]
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: layout,
+    children:[
+      {
+        path: 'SellerRegister',
+        name: 'SellerRegister',
+        component: SellerRegister
+      }
+    ]
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: layout,
+    children:[
+      {
+        path: 'SellerRegister_admin',
+        name: 'SellerRegister_admin',
+        component: SellerRegister_admin
       }
     ]
   },

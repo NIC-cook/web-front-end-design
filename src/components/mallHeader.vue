@@ -18,7 +18,7 @@
     <el-menu-item index="4" @click="switch3()">订单管理</el-menu-item>
     <el-submenu index="5">
       <template slot="title">登陆ID：{{$store.state.accountId}}</template>
-      <el-menu-item index="2-1">账号信息</el-menu-item>
+      <el-menu-item index="2-1" @click="sellerRegister()">商家注册</el-menu-item>
       <el-menu-item index="2-2" @click="outLogin()">登出</el-menu-item>
     </el-submenu>
     <el-menu-item index="5">
@@ -60,12 +60,22 @@ export default {
     },
     switch3(){
       const th=this;
-      th.$router.push("/home/admin");
+      if (this.$store.state.accountId=="10001")
+        th.$router.push("/home/admin");
+      else
+        th.$router.push("/home/user");
     },
     switch4(){
       const th=this;
       th.$router.push("/main");
     },
+    sellerRegister(){
+      const th=this;
+      if (this.$store.state.accountId=="10001")
+        th.$router.push("/home/SellerRegister_admin");
+      else
+        th.$router.push("/home/SellerRegister");
+    }
   },
 }
 </script>
